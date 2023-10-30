@@ -1,0 +1,17 @@
+# dependencies
+node_modules
+
+# sst
+.sst
+.build
+
+# misc
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+dist
+
+# local env files
+.env*.local
+.env
