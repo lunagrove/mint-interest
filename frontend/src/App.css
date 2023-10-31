@@ -192,6 +192,7 @@ footer {
   height: 154px;
   background-image: url('./assets/footer-image.png');
   background-repeat: repeat-x;
+  display: flex;
 }
 
 .footer-text {
@@ -202,3 +203,10 @@ footer {
   font-weight: 400;
 }
 
+.footer-text2 {
+  position: absolute;
+  left: 200px;
+  top: 128px;
+  font-size: 0.9em;
+  font-weight: 400;
+}

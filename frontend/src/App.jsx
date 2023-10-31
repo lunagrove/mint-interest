@@ -10,12 +10,30 @@ function App() {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [isButtonClicked, setIsButtonClicked] = useState(false);
+  const [displayCount, setDisplayCount] = useState(false);
 
   const apiUrl = import.meta.env.VITE_API_URL;
+  //const apiUrl = 'https://uotb2k9cih.execute-api.us-east-1.amazonaws.com'; Use this for dev??
 
   useEffect(() => {
 		fetchCount();
 	}, [count]);
+
+  useEffect(() => {
+    function handleKeyPress(event) {
+      if (event.ctrlKey && event.shiftKey && event.key === 'X') {
+        fetchCount();
+        setDisplayCount(true);
+      }
+      setTimeout(() => {
+        setDisplayCount(false);
+      }, 5000);
+    }
+    window.addEventListener('keydown', handleKeyPress);
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
 
   const togglePanel = () => {
     setIsPanelOpen(!isPanelOpen);
@@ -43,14 +61,12 @@ function App() {
   const fetchCount = async () => {
     await axios.get(apiUrl + "/count").then ((res) => {
       setCount(parseInt(res.data.clickCount));
-      console.log(res.data.clickCount);
     });
   };
 
   const incrementCount = async () => {
     await axios.put(apiUrl + "/count").then ((res) => {
       setCount(parseInt(res.data.clickCount));
-      console.log(res.data.clickCount);
     });
   };
 
@@ -94,6 +110,7 @@ function App() {
 
       <footer>
         <p className="footer-text">&copy; {getYear()} holmesgroup</p>
+        {displayCount && <p className="footer-text2">Current count: {count}</p>}
       </footer>
 
     </div>
